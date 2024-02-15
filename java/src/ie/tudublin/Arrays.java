@@ -97,16 +97,21 @@ public class Arrays extends PApplet
 	{	
 
 		background(0);
+		stroke(255);
 		
-		float w = width * 0.8f / (float)months.length;
+		float paddingX = width/(float)months.length - 20;
+		float paddingY = height / 20;
+
+		float w = (width - paddingX * 2)/months.length;
+		float y = (height - paddingY * 2);
 		
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
-			float x = map1(i, 0, months.length, 0, width);
+			float x = map1(i,0, months.length, paddingX, width - paddingX);
+			float h = map1(rainfall[i], 0, 500, 0, height - (paddingY * 2));
 			float hue = map1(i, 0, months.length, 0, 360);
-			System.out.println(hue);
 			fill(hue, 255, 255);
-			rect(x, height, w, -rainfall[i]);
+			rect(x, y, w, -h);
 		}
 		
 	}
