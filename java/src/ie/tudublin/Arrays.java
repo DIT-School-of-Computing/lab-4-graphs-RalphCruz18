@@ -34,7 +34,10 @@ public class Arrays extends PApplet
 			mode = 0;
 		} else if (key == '1') {
 			mode = 1;
+		} else if (key == '2') {
+			mode = 2;
 		}
+		
 	}
 
 	public void settings()
@@ -165,7 +168,7 @@ public class Arrays extends PApplet
 				float h1 = map1(rainfall[0], 0, 500, 0, height - (paddingY2 * 2));
 				float y1 = yBase - h1;
 
-				for(int i = 1 ; i < months.length ;  i ++) {
+				for(int i = 0 ; i < months.length ;  i ++) {
 					float x2 = paddingX2 + w2/2 + i * w2;
 					float h2 = map1(rainfall[i], 0, 500, 0, height - (paddingY2 * 2));
 					float y2 = yBase - h2;
@@ -195,6 +198,41 @@ public class Arrays extends PApplet
 				textAlign(CENTER, TOP);
 				fill(255);
 				text("Rainfall Trend Chart", width / 2, height / 50);
+			break;
+
+			case 2:
+				background(0);
+
+				stroke(255);
+				float paddingX3 = width/(float)months.length - 3;
+				float paddingY3 = height / 10;
+				float lastAngle = 0;
+				float total = 0;
+				
+				for (int i = 0; i < rainfall.length; i++) {
+					total += rainfall[i];
+				}
+				
+				for (int i = 0; i < rainfall.length; i++) {
+					float hue = map(i, 0, rainfall.length, 0, 255);
+					fill(hue, 255, 255); 
+					float angle = TWO_PI * (rainfall[i] / total);
+					arc(width / 2, height / 2, width - paddingX3 * 2, height - paddingY3 * 2, lastAngle, lastAngle + angle);
+					
+					float middleAngle = lastAngle + angle / 2;
+					float labelRadius = (width - paddingX3 * 2) / 4; 
+					float labelX = width / 2 + cos(middleAngle) * labelRadius;
+					float labelY = height / 2 + sin(middleAngle) * labelRadius;
+					fill(255); 
+					text(months[i], labelX, labelY);
+
+					lastAngle += angle;
+
+					textSize(15);
+					textAlign(CENTER, TOP);
+					fill(255);
+					text("Rainfall Pie Chart", width / 2, paddingY3 / 2); 
+				}
 				break;
 			
 		}
