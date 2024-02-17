@@ -202,41 +202,42 @@ public class Arrays extends PApplet
 
 			case 2:
 				background(0);
-
 				stroke(255);
 				float paddingX3 = width/(float)months.length - 3;
 				float paddingY3 = height / 10;
 				float lastAngle = 0;
 				float total = 0;
 				
+				// Calculate the total amount of rainfall
 				for (int i = 0; i < rainfall.length; i++) {
 					total += rainfall[i];
 				}
 				
+				// Draw the pie chart
 				for (int i = 0; i < rainfall.length; i++) {
 					float hue = map(i, 0, rainfall.length, 0, 255);
-					fill(hue, 255, 255); 
-					float angle = TWO_PI * (rainfall[i] / total);
+					fill(hue, 255, 255);
+					float angle = map(rainfall[i], 0, total, 0, TWO_PI); 
 					arc(width / 2, height / 2, width - paddingX3 * 2, height - paddingY3 * 2, lastAngle, lastAngle + angle);
 					float middleAngle = lastAngle + angle / 2;
-					float labelRadius = (width - paddingX3 * 2) / 2 +10; 
+					float labelRadius = (width - paddingX3 * 2) / 2 + 20; 
 					float labelX = width / 2 + cos(middleAngle) * labelRadius;
 					float labelY = height / 2 + sin(middleAngle) * labelRadius;
-					fill(255); 
-					textSize(12); 
-					textAlign(CENTER, CENTER); 
-					text(months[i], labelX, labelY);
-				  
-					lastAngle += angle;
-				  
-
-					textSize(17);
-					textAlign(CENTER, TOP);
 					fill(255);
-					text("Rainfall Pie Chart", width / 2, (paddingY3 / 2) - 20 ); 
+					textSize(12);
+					textAlign(CENTER, CENTER);
+					text(months[i], labelX, labelY);
+					
+					lastAngle += angle;
 				}
+
+				// Draw the chart title outside of the loop
+				textSize(17);
+				textAlign(CENTER, TOP);
+				fill(255);
+				text("Rainfall Pie Chart", width / 2, (paddingY3 / 2) - 20 ); 
 				break;
-			
+
 		}
 	}
 }
