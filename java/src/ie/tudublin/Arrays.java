@@ -101,7 +101,7 @@ public class Arrays extends PApplet
 	public void setup() {
 		colorMode(HSB, 360, 255, 255);
 		background(0);
-		
+		randomize();
 		
 	}
 
@@ -218,20 +218,22 @@ public class Arrays extends PApplet
 					fill(hue, 255, 255); 
 					float angle = TWO_PI * (rainfall[i] / total);
 					arc(width / 2, height / 2, width - paddingX3 * 2, height - paddingY3 * 2, lastAngle, lastAngle + angle);
-					
 					float middleAngle = lastAngle + angle / 2;
-					float labelRadius = (width - paddingX3 * 2) / 4; 
+					float labelRadius = (width - paddingX3 * 2) / 2 +10; 
 					float labelX = width / 2 + cos(middleAngle) * labelRadius;
 					float labelY = height / 2 + sin(middleAngle) * labelRadius;
 					fill(255); 
+					textSize(12); 
+					textAlign(CENTER, CENTER); 
 					text(months[i], labelX, labelY);
-
+				  
 					lastAngle += angle;
+				  
 
-					textSize(15);
+					textSize(17);
 					textAlign(CENTER, TOP);
 					fill(255);
-					text("Rainfall Pie Chart", width / 2, paddingY3 / 2); 
+					text("Rainfall Pie Chart", width / 2, (paddingY3 / 2) - 20 ); 
 				}
 				break;
 			
