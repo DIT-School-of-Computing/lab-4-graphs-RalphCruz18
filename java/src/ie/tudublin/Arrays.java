@@ -40,6 +40,7 @@ public class Arrays extends PApplet
 	public void settings()
 	{
 		size(600, 600);
+		//fullScreen();
 
 		String[] m1 = months;
 		print(m1[0]);
@@ -97,7 +98,6 @@ public class Arrays extends PApplet
 	public void setup() {
 		colorMode(HSB, 360, 255, 255);
 		background(0);
-		randomize();
 		
 		
 	}
@@ -143,7 +143,7 @@ public class Arrays extends PApplet
 				}
 		
 				stroke(255);
-				line(paddingX, paddingY, w, y);
+				line(width/15, paddingY, width/15, y);
 		
 				textSize(15);
 				textAlign(CENTER, TOP);
@@ -154,46 +154,48 @@ public class Arrays extends PApplet
 			case 1:
 				background(0);
 				stroke(255);
-				
+
 				float paddingX2 = width/(float)months.length - 3;
 				float paddingY2 = height / 10;
-		
-				float w2 = (width - paddingX2 * 2)/months.length;
-				float y2 = height - paddingY2;
 
-				for(int i = 0 ; i < months.length ;  i ++)
-				{
-					
-					float x = map1(i,0, months.length, paddingX2, width - paddingX2);
-					float h = map1(rainfall[i], 0, 500, 0, height - (paddingY2 * 2));
-					float hue = map1(i, 0, months.length, 0, 360);
-					fill(hue, 255, 255);
-					rect(x, y2, w2, -h);
-		
+				float w2 = (width - paddingX2 * 2)/months.length;
+				float yBase = height - paddingY2; 
+
+				float x1 = paddingX2 + w2/2;
+				float h1 = map1(rainfall[0], 0, 500, 0, height - (paddingY2 * 2));
+				float y1 = yBase - h1;
+
+				for(int i = 1 ; i < months.length ;  i ++) {
+					float x2 = paddingX2 + w2/2 + i * w2;
+					float h2 = map1(rainfall[i], 0, 500, 0, height - (paddingY2 * 2));
+					float y2 = yBase - h2;
+
+					line(x1, y1, x2, y2);
+
+					x1 = x2;
+					y1 = y2;
+
 					fill(255);
-					text(months[i],x + (w2/2), y2 + (height/30));
-		
+					text(months[i], x2, yBase + (height/30));
 				}
-		
+
 				float rainfallX2 = paddingX2 - (width/20);
-		
-				for(int i = 0 ; i < rows ; i ++)
-				{
+				for(int i = 0 ; i < rows ; i ++) {
 					float rainfallY = map1(i, 0, rows - 1, height-paddingY2, paddingY2);
 					float denom = map1(i, 0, rows, 0, 500);
-		
+
 					fill(255);
 					text((int)denom, rainfallX2, rainfallY);
 				}
-		
+
 				stroke(255);
-				line(paddingX2, paddingY2, w2, y2);
-		
+				line(paddingX2, paddingY2, paddingX2, yBase);
+
 				textSize(15);
 				textAlign(CENTER, TOP);
 				fill(255);
-				text("Rainfall Trend chart", width / 2, height / 50);
-			break;
+				text("Rainfall Trend Chart", width / 2, height / 50);
+				break;
 			
 		}
 	}
